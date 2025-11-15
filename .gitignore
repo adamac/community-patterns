@@ -1,0 +1,44 @@
+# Identity keys (never commit!)
+*.key
+claude.key
+**/claude.key
+
+# Node modules and Deno
+node_modules/
+.deno/
+deno.lock
+
+# Build artifacts
+dist/
+build/
+*.js.map
+
+# OS files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Testing
+coverage/
+.nyc_output/
