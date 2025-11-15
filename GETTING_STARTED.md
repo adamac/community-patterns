@@ -71,9 +71,10 @@ You'll need API keys for AI features:
 - Navigate to "API Keys" → Create new key
 - Save it securely
 
-**OpenAI API Key** (optional):
-- Visit: https://platform.openai.com/
-- Navigate to "API Keys" → Create new key
+**Jina AI API Key** (required for web reading):
+- Visit: https://jina.ai/
+- Sign up/login → Navigate to API Keys
+- Create new key
 - Save it securely
 
 ---
@@ -124,21 +125,34 @@ gh repo clone commontoolsinc/labs
 
 ### Set Up Dev Server
 
-Create `.env` file in the `labs` directory:
+Create `.env` file in the `labs/packages/toolshed` directory:
 
 ```bash
-cd ~/Code/labs
+cd ~/Code/labs/packages/toolshed
 
 cat > .env << 'EOF'
-# Anthropic API Key (required for Claude models)
-ANTHROPIC_API_KEY=sk-ant-xxxx-your-actual-key-here
-
-# OpenAI API Key (optional, for GPT models)
-OPENAI_API_KEY=sk-xxxx-your-actual-key-here
-
-# Server configuration
+ENV=development
 PORT=8000
-HOST=localhost
+LOG_LEVEL=info
+
+# Shell frontend URL for local development
+SHELL_URL=http://localhost:5173
+
+## Google OAuth Credentials (optional - for Google integrations)
+## Get these from: https://console.cloud.google.com/apis/credentials
+## Add redirect URI: http://localhost:8000/api/integrations/google-oauth/callback
+# GOOGLE_CLIENT_ID=your-client-id-here
+# GOOGLE_CLIENT_SECRET=your-client-secret-here
+
+## OpenTelemetry Configuration (disabled for local dev)
+OTEL_ENABLED=false
+
+## AI LLM Provider API Keys
+# Add your Anthropic API key here to enable Claude models
+CTTS_AI_LLM_ANTHROPIC_API_KEY=sk-ant-xxxx-your-actual-key-here
+
+## Jina AI web reader API key
+JINA_API_KEY=jina_xxxx-your-actual-key-here
 EOF
 
 chmod 600 .env
