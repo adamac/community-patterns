@@ -8,7 +8,7 @@
 
 User has already completed Phase 1 (in README.md):
 - ✅ Installed Claude Code
-- ✅ Installed tools (deno, git, gh)
+- ✅ Installed tools (deno, git, gh, node)
 - ✅ Cloned their fork of community-patterns
 - ✅ Configured Playwright MCP
 - ✅ Restarted Claude Code

@@ -34,12 +34,14 @@ Complete these steps BEFORE launching Claude Code for the first time. This takes
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # 2. Install required tools
-brew install deno git gh
+brew install deno git gh node
 
 # 3. Verify installations
 deno --version
 git --version
 gh --version
+node --version
+npm --version
 
 # 4. Authenticate with GitHub
 gh auth login
