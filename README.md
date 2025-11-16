@@ -96,10 +96,6 @@ cd ~/Code
 # 2. Clone your fork
 gh repo clone YOUR-USERNAME/community-patterns
 cd community-patterns
-
-# 3. Add upstream remote (to get updates) - only if not already added
-git remote get-url upstream 2>/dev/null || git remote add upstream https://github.com/commontoolsinc/community-patterns.git
-git fetch upstream
 ```
 
 ### Step 4: Install Playwright MCP
