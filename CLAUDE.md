@@ -84,9 +84,38 @@ git push origin main
 - Gets new example patterns
 - Gets other users' contributed patterns
 
+### Step 1.5: Update Labs and Recipes Repositories
+
+**After updating community-patterns, also update labs/ and recipes/ (if they exist):**
+
+```bash
+# Get parent directory
+PARENT_DIR="$(git rev-parse --show-toplevel)/.."
+
+# Update labs (required)
+if [ -d "$PARENT_DIR/labs" ]; then
+  echo "Updating labs repository..."
+  cd "$PARENT_DIR/labs"
+  git fetch origin
+  git pull --rebase origin main
+  cd -
+else
+  echo "⚠️  labs/ not found - user may need to clone it"
+fi
+
+# Update recipes (optional)
+if [ -d "$PARENT_DIR/recipes" ]; then
+  echo "Updating recipes repository..."
+  cd "$PARENT_DIR/recipes"
+  git fetch origin
+  git pull --rebase origin main
+  cd -
+fi
+```
+
 **Tell user:**
 ```
-Checking for updates from upstream...
+Updated dependency repositories (labs and recipes if available).
 [If found updates]: Pulled latest updates! This includes:
   - Updated documentation
   - New example patterns
