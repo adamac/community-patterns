@@ -162,6 +162,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              maskImage: "linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)",
             }}
           >
             {spinSequence.length > 0 ? (
