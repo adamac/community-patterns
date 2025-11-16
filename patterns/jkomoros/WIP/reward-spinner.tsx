@@ -193,7 +193,8 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                         width: "100%",
                         flexShrink: "0",
                         whiteSpace: "nowrap",
-                        letterSpacing: "-0.35em",
+                        letterSpacing: "-0.55em",
+                        paddingLeft: "0.55em",
                       }}
                     >
                       {emoji}
@@ -228,7 +229,8 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                         width: "100%",
                         flexShrink: "0",
                         whiteSpace: "nowrap",
-                        letterSpacing: "-0.35em",
+                        letterSpacing: "-0.55em",
+                        paddingLeft: "0.55em",
                       }}
                     >
                       {emoji}
@@ -247,7 +249,8 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                   alignItems: "center",
                   justifyContent: "center",
                   whiteSpace: "nowrap",
-                  letterSpacing: "-0.35em",
+                  letterSpacing: "-0.55em",
+                  paddingLeft: "0.55em",
                 }}
               >
                 {currentEmoji}
