@@ -16,13 +16,30 @@ Now guide them through cloning dependencies, getting API keys, and creating thei
 
 ---
 
+## Set Up Path Variables
+
+**Set these variables once at the beginning - you'll use them throughout setup:**
+
+```bash
+# Set base directory paths (only need to do this once)
+COMMUNITY_PATTERNS_DIR="$(git rev-parse --show-toplevel)"
+PARENT_DIR="$COMMUNITY_PATTERNS_DIR/.."
+LABS_DIR="$PARENT_DIR/labs"
+
+echo "Working directory: $COMMUNITY_PATTERNS_DIR"
+```
+
+**Tell the user:** "I've set up the working directories. Now let's clone the dependencies."
+
+---
+
 ## Step 1: Clone Required Repositories
 
 Clone the labs repository (required) and recipes repository (optional, if accessible) as peers to community-patterns.
 
 ```bash
 # Go to parent directory of community-patterns (clone as peers)
-cd "$(git rev-parse --show-toplevel)/.."
+cd "$PARENT_DIR"
 
 # Clone labs (framework - REQUIRED, READ ONLY)
 gh repo clone commontoolsinc/labs
@@ -67,7 +84,7 @@ Tell user: "You can skip the optional keys for now and add them later if needed.
 Guide user to create `.env` file in `labs/packages/toolshed` with their API keys.
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/../labs/packages/toolshed"
+cd "$LABS_DIR/packages/toolshed"
 
 cat > .env << 'EOF'
 ENV=development
@@ -107,7 +124,7 @@ chmod 600 .env
 Create the user's pattern directory:
 
 ```bash
-cd "$(git rev-parse --show-toplevel)"
+cd "$COMMUNITY_PATTERNS_DIR"
 
 # Get username from git origin
 GITHUB_USER=$(git remote get-url origin | sed -E 's/.*[:/]([^/]+)\/community-patterns.*/\1/')
@@ -137,10 +154,10 @@ git push origin main
 ## Step 5: Create Identity Key and Workspace Config
 
 ```bash
-cd "$(git rev-parse --show-toplevel)"
+cd "$COMMUNITY_PATTERNS_DIR"
 
 # Create identity key (at repo root)
-deno task -c "../labs/deno.json" ct id new > claude.key
+deno task -c "$LABS_DIR/deno.json" ct id new > claude.key
 chmod 600 claude.key
 
 # Get username
@@ -162,9 +179,6 @@ echo "Created workspace for: $GITHUB_USER"
 Check if dev servers are running, start if needed:
 
 ```bash
-# Get labs directory path (peer to community-patterns)
-LABS_DIR="$(git rev-parse --show-toplevel)/../labs"
-
 # Check toolshed (port 8000)
 if ! lsof -ti:8000 > /dev/null 2>&1; then
   cd "$LABS_DIR/packages/toolshed" && deno task dev > /tmp/toolshed-dev.log 2>&1 &
@@ -204,7 +218,7 @@ Open the test space in Playwright to register the user.
 **After receiving passphrase, save it:**
 
 ```bash
-cd "$(git rev-parse --show-toplevel)"
+cd "$COMMUNITY_PATTERNS_DIR"
 
 # Save passphrase to file (will be gitignored)
 cat > .passphrase << EOF
@@ -227,7 +241,6 @@ echo "Passphrase saved to .passphrase (this file is gitignored)"
 Copy the example counter pattern to the user's directory:
 
 ```bash
-COMMUNITY_PATTERNS_DIR="$(git rev-parse --show-toplevel)"
 cd "$COMMUNITY_PATTERNS_DIR"
 
 # Copy the working example counter
@@ -245,10 +258,6 @@ echo "Created test pattern at patterns/$GITHUB_USER/counter.tsx"
 Deploy and test the counter:
 
 ```bash
-# Get paths relative to community-patterns
-COMMUNITY_PATTERNS_DIR="$(git rev-parse --show-toplevel)"
-LABS_DIR="$COMMUNITY_PATTERNS_DIR/../labs"
-
 # Test syntax
 cd "$LABS_DIR"
 deno task ct dev "$COMMUNITY_PATTERNS_DIR/patterns/$GITHUB_USER/counter.tsx" --no-run
