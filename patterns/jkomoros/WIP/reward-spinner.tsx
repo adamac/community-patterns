@@ -155,8 +155,8 @@ export default recipe<SpinnerInput, SpinnerOutput>(
           {/* Slot Machine Display */}
           <div
             style={{
-              width: "300px",
-              height: "250px",
+              width: "min(250px, 80vw)",
+              height: "200px",
               overflow: "hidden",
               position: "relative",
               display: "flex",
@@ -184,15 +184,16 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                     <div
                       key={index}
                       style={{
-                        fontSize: "200px",
-                        lineHeight: "250px",
-                        height: "250px",
+                        fontSize: "150px",
+                        lineHeight: "200px",
+                        height: "200px",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         width: "100%",
                         flexShrink: "0",
                         whiteSpace: "nowrap",
+                        letterSpacing: "-0.35em",
                       }}
                     >
                       {emoji}
@@ -218,15 +219,16 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                     <div
                       key={index}
                       style={{
-                        fontSize: "200px",
-                        lineHeight: "250px",
-                        height: "250px",
+                        fontSize: "150px",
+                        lineHeight: "200px",
+                        height: "200px",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         width: "100%",
                         flexShrink: "0",
                         whiteSpace: "nowrap",
+                        letterSpacing: "-0.35em",
                       }}
                     >
                       {emoji}
@@ -238,13 +240,14 @@ export default recipe<SpinnerInput, SpinnerOutput>(
               // Initial static display
               <div
                 style={{
-                  fontSize: "200px",
+                  fontSize: "150px",
                   lineHeight: "1",
-                  height: "250px",
+                  height: "200px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   whiteSpace: "nowrap",
+                  letterSpacing: "-0.35em",
                 }}
               >
                 {currentEmoji}
@@ -259,7 +262,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                 transform: translateY(0);
               }
               100% {
-                transform: translateY(-3500px);
+                transform: translateY(-2800px);
               }
             }
             @keyframes slotSpin2 {
@@ -267,7 +270,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                 transform: translateY(0);
               }
               100% {
-                transform: translateY(-3500px);
+                transform: translateY(-2800px);
               }
             }
           `}</style>
@@ -282,8 +285,8 @@ export default recipe<SpinnerInput, SpinnerOutput>(
               spinCount,
             })}
             style={{
-              fontSize: "48px",
-              padding: "30px 60px",
+              fontSize: "32px",
+              padding: "20px 40px",
               fontWeight: "bold",
             }}
           >
