@@ -17,6 +17,12 @@ const prizeOptions = [
   { emoji: "🤗", label: "Big Hug!" },
 ] as const;
 
+interface SpinRecord {
+  timestamp: number;
+  generosity: number;
+  result: string;
+}
+
 interface SpinnerInput {
   currentEmoji: Cell<Default<string, "🎁">>;
   isSpinning: Cell<Default<boolean, false>>;
@@ -28,6 +34,8 @@ interface SpinnerInput {
   spinCount: Cell<Default<number, 0>>;
   // Show payout visualization
   showPayouts: Cell<Default<boolean, false>>;
+  // History of all spins (timestamp, generosity level, result)
+  spinHistory: Cell<Default<SpinRecord[], []>>;
 }
 
 interface SpinnerOutput {
@@ -37,6 +45,7 @@ interface SpinnerOutput {
   spinSequence: Cell<Default<string[], []>>;
   spinCount: Cell<Default<number, 0>>;
   showPayouts: Cell<Default<boolean, false>>;
+  spinHistory: Cell<Default<SpinRecord[], []>>;
 }
 
 const spin = handler<
@@ -47,9 +56,10 @@ const spin = handler<
     generosity: Cell<number>;
     spinSequence: Cell<string[]>;
     spinCount: Cell<number>;
+    spinHistory: Cell<SpinRecord[]>;
   }
 >(
-  (_, { currentEmoji, isSpinning, generosity, spinSequence, spinCount }) => {
+  (_, { currentEmoji, isSpinning, generosity, spinSequence, spinCount, spinHistory }) => {
     // Convert generosity (0-10) to weights
     // At 0: mostly hugs (99%), At 10: mostly candy (99%)
     const gen = generosity.get();
@@ -102,6 +112,15 @@ const spin = handler<
     // Set the sequence to trigger animation
     spinSequence.set(sequence);
     spinCount.set(spinCount.get() + 1);
+
+    // Record this spin in history
+    const history = spinHistory.get();
+    const newRecord: SpinRecord = {
+      timestamp: Date.now(),
+      generosity: gen,
+      result: finalEmoji,
+    };
+    spinHistory.set([...history, newRecord]);
   }
 );
 
@@ -144,7 +163,7 @@ const closePayouts = handler<
 
 export default recipe<SpinnerInput, SpinnerOutput>(
   "Reward Spinner",
-  ({ currentEmoji, isSpinning, generosity, spinSequence, spinCount, showPayouts }) => {
+  ({ currentEmoji, isSpinning, generosity, spinSequence, spinCount, showPayouts, spinHistory }) => {
     // Compute the TADA emoji display from generosity level (0-10 emojis, one per level)
     const tadaDisplay = computed(() =>
       "🎉".repeat(generosity.get())
@@ -446,6 +465,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
               generosity,
               spinSequence,
               spinCount,
+              spinHistory,
             })}
             style={{
               fontSize: "32px",
@@ -596,6 +616,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
       spinSequence,
       spinCount,
       showPayouts,
+      spinHistory,
     };
   }
 );
