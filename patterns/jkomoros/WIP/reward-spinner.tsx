@@ -106,15 +106,15 @@ const spin = handler<
 
     // Build slot machine sequence: start with current emoji to avoid visual discontinuity,
     // then random items, then final result at the end
-    // Total of 15 items, with final result at position 13 (animation shows positions 0-13)
-    // Animation translates -2800px over 15 items of 200px each, ending at position 13 visible
+    // Total of 32 items, with final result at position 30 (animation shows positions 0-30)
+    // Animation translates -6000px over 32 items of 200px each, ending at position 30 visible
     const sequence: string[] = [];
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 32; i++) {
       if (i === 0) {
         // First item is current emoji (avoids visual jump)
         sequence.push(currentEmoji.get());
-      } else if (i === 13) {
-        // Final result at position 13 (will be visible after animation stops)
+      } else if (i === 30) {
+        // Final result at position 30 (will be visible after animation stops)
         sequence.push(finalEmoji);
       } else {
         // Random prize
@@ -260,7 +260,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    animation: "slotSpin1 6s cubic-bezier(0.25, 0.1, 0.25, 1)",
+                    animation: "slotSpin1 6s cubic-bezier(0.05, 0.7, 0.3, 1)",
                     animationFillMode: "forwards",
                     position: "absolute",
                     top: "0",
@@ -332,7 +332,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    animation: "slotSpin2 6s cubic-bezier(0.25, 0.1, 0.25, 1)",
+                    animation: "slotSpin2 6s cubic-bezier(0.05, 0.7, 0.3, 1)",
                     animationFillMode: "forwards",
                     position: "absolute",
                     top: "0",
@@ -578,7 +578,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                 transform: translateY(0);
               }
               100% {
-                transform: translateY(-2800px);
+                transform: translateY(-6000px);
               }
             }
             @keyframes slotSpin2 {
@@ -586,7 +586,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                 transform: translateY(0);
               }
               100% {
-                transform: translateY(-2800px);
+                transform: translateY(-6000px);
               }
             }
             @keyframes payoutFade {
