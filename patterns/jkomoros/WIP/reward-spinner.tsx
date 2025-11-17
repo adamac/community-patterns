@@ -211,29 +211,31 @@ export default recipe<SpinnerInput, SpinnerOutput>(
             gap: "40px",
           }}
         >
-          {/* Slot Machine Display */}
-          <div
-            onClick={spin({
-              currentEmoji,
-              isSpinning,
-              generosity,
-              spinSequence,
-              spinCount,
-              spinHistory,
-            })}
-            style={{
-              width: "min(300px, 90vw)",
-              height: "200px",
-              overflow: "hidden",
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              maskImage: "linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)",
-              cursor: "pointer",
-              transform: "scale(1.8)",
-            }}
-          >
+          {/* Wrapper for emoji and sparkles */}
+          <div style={{ position: "relative" }}>
+            {/* Slot Machine Display */}
+            <div
+              onClick={spin({
+                currentEmoji,
+                isSpinning,
+                generosity,
+                spinSequence,
+                spinCount,
+                spinHistory,
+              })}
+              style={{
+                width: "min(300px, 90vw)",
+                height: "200px",
+                overflow: "hidden",
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                maskImage: "linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)",
+                cursor: "pointer",
+                transform: "scale(1.8)",
+              }}
+            >
             {spinSequence.get().length > 0 ? (
               isEvenSpin ? (
                 // Animated sequence (even spins)
@@ -435,22 +437,22 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                 )}
               </div>
             )}
-          </div>
+            </div>
 
-          {/* Sparkle Burst - only show after first spin */}
-          {spinCount.get() > 0 && (
-            <div
-              key={spinCount}
-              style={{
-                position: "fixed",
-                top: "50%",
-                left: "50%",
-                width: "0",
-                height: "0",
-                pointerEvents: "none",
-                zIndex: 1000,
-              }}
-            >
+            {/* Sparkle Burst - only show after first spin */}
+            {spinCount.get() > 0 && (
+              <div
+                key={spinCount}
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  width: "0",
+                  height: "0",
+                  pointerEvents: "none",
+                  zIndex: 1000,
+                }}
+              >
               <div style={{ position: "absolute", left: "0", top: "0", fontSize: "42px", opacity: 0, animation: "sparkleBurst0 1.2s ease-out 6s" }}>⭐</div>
               <div style={{ position: "absolute", left: "0", top: "0", fontSize: "75px", opacity: 0, animation: "sparkleBurst1 3.5s ease-out 6s" }}>⭐</div>
               <div style={{ position: "absolute", left: "0", top: "0", fontSize: "45px", opacity: 0, animation: "sparkleBurst2 0.9s ease-out 6s" }}>⭐</div>
@@ -471,8 +473,9 @@ export default recipe<SpinnerInput, SpinnerOutput>(
               <div style={{ position: "absolute", left: "0", top: "0", fontSize: "38px", opacity: 0, animation: "sparkleBurst17 3.6s ease-out 6s" }}>⭐</div>
               <div style={{ position: "absolute", left: "0", top: "0", fontSize: "70px", opacity: 0, animation: "sparkleBurst18 1.0s ease-out 6s" }}>⭐</div>
               <div style={{ position: "absolute", left: "0", top: "0", fontSize: "40px", opacity: 0, animation: "sparkleBurst19 2.9s ease-out 6s" }}>⭐</div>
-            </div>
-          )}
+              </div>
+            )}
+          </div>
 
           {/* CSS Animations */}
           <style>{`
