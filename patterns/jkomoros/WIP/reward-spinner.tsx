@@ -231,6 +231,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
               justifyContent: "center",
               maskImage: "linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)",
               cursor: "pointer",
+              transform: "scale(1.8)",
             }}
           >
             {spinSequence.get().length > 0 ? (
