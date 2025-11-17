@@ -174,26 +174,44 @@ echo "Created workspace for: $GITHUB_USER"
 
 ---
 
-## Step 6: Start Dev Servers
+## Step 6: Start Dev Servers (If Needed)
 
-Check if dev servers are running, start if needed:
+**First, check if the user has already started the dev servers:**
 
 ```bash
-# Check toolshed (port 8000)
-if ! lsof -ti:8000 > /dev/null 2>&1; then
-  cd "$LABS_DIR/packages/toolshed" && deno task dev > /tmp/toolshed-dev.log 2>&1 &
-  echo "Started toolshed server"
-fi
+# Check both ports
+TOOLSHED_RUNNING=$(lsof -ti:8000 > /dev/null 2>&1 && echo "yes" || echo "no")
+SHELL_RUNNING=$(lsof -ti:5173 > /dev/null 2>&1 && echo "yes" || echo "no")
 
-# Check shell (port 5173)
-if ! lsof -ti:5173 > /dev/null 2>&1; then
+if [ "$TOOLSHED_RUNNING" = "yes" ] && [ "$SHELL_RUNNING" = "yes" ]; then
+  echo "✓ Both dev servers already running - skipping startup"
+  echo "  - Toolshed: http://localhost:8000"
+  echo "  - Shell: http://localhost:5173"
+elif [ "$TOOLSHED_RUNNING" = "yes" ]; then
+  echo "✓ Toolshed already running on port 8000"
+  echo "Starting shell on port 5173..."
   cd "$LABS_DIR/packages/shell" && deno task dev-local > /tmp/shell-dev.log 2>&1 &
-  echo "Started shell server"
+  sleep 3
+  echo "Shell server started"
+elif [ "$SHELL_RUNNING" = "yes" ]; then
+  echo "✓ Shell already running on port 5173"
+  echo "Starting toolshed on port 8000..."
+  cd "$LABS_DIR/packages/toolshed" && deno task dev > /tmp/toolshed-dev.log 2>&1 &
+  sleep 3
+  echo "Toolshed server started"
+else
+  echo "Starting both dev servers..."
+  cd "$LABS_DIR/packages/toolshed" && deno task dev > /tmp/toolshed-dev.log 2>&1 &
+  cd "$LABS_DIR/packages/shell" && deno task dev-local > /tmp/shell-dev.log 2>&1 &
+  sleep 3
+  echo "Dev servers started"
 fi
 
-sleep 3
+echo ""
 echo "Dev servers ready at http://localhost:8000"
 ```
+
+**Tell the user:** If both servers were already running, inform them: "Your dev servers are already running, so I've skipped starting them."
 
 ---
 

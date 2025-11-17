@@ -205,33 +205,45 @@ Ready to work! Your workspace: patterns/$GITHUB_USER/
 What would you like to work on today?
 ```
 
-### Step 3: Check and Start Dev Servers
+### Step 3: Check and Start Dev Servers (If Needed)
 
 **IMPORTANT: Two servers must be running:**
 1. **Toolshed** (backend) - Port 8000
 2. **Shell** (frontend) - Port 5173
 
-**Check if both servers are running:**
+**First, check if servers are already running:**
 
 ```bash
-# Check toolshed (backend on port 8000)
-if lsof -ti:8000 > /dev/null 2>&1; then
-  echo "✓ Toolshed server running on port 8000"
-else
-  echo "✗ Toolshed server not running - will start"
-  NEED_TOOLSHED=1
-fi
+# Check both ports
+TOOLSHED_RUNNING=$(lsof -ti:8000 > /dev/null 2>&1 && echo "yes" || echo "no")
+SHELL_RUNNING=$(lsof -ti:5173 > /dev/null 2>&1 && echo "yes" || echo "no")
 
-# Check shell (frontend on port 5173)
-if lsof -ti:5173 > /dev/null 2>&1; then
-  echo "✓ Shell server running on port 5173"
+if [ "$TOOLSHED_RUNNING" = "yes" ] && [ "$SHELL_RUNNING" = "yes" ]; then
+  echo "✓ Both dev servers already running:"
+  echo "  - Toolshed (backend): http://localhost:8000"
+  echo "  - Shell (frontend): http://localhost:5173"
+  echo ""
+  echo "Servers are ready. No need to start them."
+elif [ "$TOOLSHED_RUNNING" = "yes" ]; then
+  echo "✓ Toolshed already running on port 8000"
+  echo "✗ Shell not running - will start it"
+  NEED_SHELL=1
+elif [ "$SHELL_RUNNING" = "yes" ]; then
+  echo "✓ Shell already running on port 5173"
+  echo "✗ Toolshed not running - will start it"
+  NEED_TOOLSHED=1
 else
-  echo "✗ Shell server not running - will start"
+  echo "✗ No dev servers running - will start both"
+  NEED_TOOLSHED=1
   NEED_SHELL=1
 fi
 ```
 
-**Start any missing servers:**
+**If servers are already running, STOP HERE and skip the rest of this step.**
+
+**Tell the user:** "I can see your dev servers are already running. Skipping server startup."
+
+**Only if servers need to be started, run this:**
 
 ```bash
 # Start toolshed if needed
@@ -255,10 +267,10 @@ fi
 
 **Why this matters:**
 - Patterns need both servers to deploy and test
+- The user may have started servers themselves - respect that and don't restart unnecessarily
 - Toolshed handles pattern deployment and data
 - Shell provides the UI for viewing patterns
-- Claude can restart them automatically when needed
-- Both run in background so session can continue
+- Claude only starts servers if they're not already running
 
 ---
 
