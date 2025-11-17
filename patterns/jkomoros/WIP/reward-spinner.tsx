@@ -92,14 +92,15 @@ const spin = handler<
 
     const finalEmoji = prizeOptions[selectedIndex].emoji;
 
-    // Update the final emoji first
-    currentEmoji.set(finalEmoji);
-
-    // Build slot machine sequence: random items, then final result at the end
+    // Build slot machine sequence: start with current emoji to avoid visual discontinuity,
+    // then random items, then final result at the end
     // Total of 15 items, with final result at position 14 (will be visible after animation)
     const sequence: string[] = [];
     for (let i = 0; i < 15; i++) {
-      if (i === 14) {
+      if (i === 0) {
+        // First item is current emoji (avoids visual jump)
+        sequence.push(currentEmoji.get());
+      } else if (i === 14) {
         // Final result at the last position
         sequence.push(finalEmoji);
       } else {
@@ -108,6 +109,9 @@ const spin = handler<
         sequence.push(randomPrize.emoji);
       }
     }
+
+    // Update the final emoji after building sequence
+    currentEmoji.set(finalEmoji);
 
     // Set the sequence to trigger animation
     spinSequence.set(sequence);
