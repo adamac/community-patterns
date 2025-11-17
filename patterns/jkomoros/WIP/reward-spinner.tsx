@@ -223,12 +223,12 @@ export default recipe<SpinnerInput, SpinnerOutput>(
               alignItems: "center",
               justifyContent: "center",
               height: "100%",
-              padding: "20px",
-              gap: "40px",
+              padding: "0",
+              gap: "0",
             }}
           >
           {/* Wrapper for emoji and sparkles */}
-          <div style={{ position: "relative" }}>
+          <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
             {/* Slot Machine Display */}
             <div
               onClick={spin({
@@ -249,7 +249,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                 justifyContent: "center",
                 maskImage: "linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)",
                 cursor: "pointer",
-                transform: "scale(1.8)",
+                transform: "scale(4.0)",
               }}
             >
             {spinSequence.get().length > 0 ? (
