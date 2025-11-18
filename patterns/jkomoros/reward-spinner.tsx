@@ -107,7 +107,7 @@ const spin = handler<
     // Build slot machine sequence: start with current emoji to avoid visual discontinuity,
     // then random items, then final result at the end
     // Total of 32 items, with final result at position 30 (animation shows positions 0-30)
-    // Animation translates -6000px over 32 items of 200px each, ending at position 30 visible
+    // Animation translates -6000px (30 items × 200px) to center item 30 in the viewport window
     const sequence: string[] = [];
     for (let i = 0; i < 32; i++) {
       if (i === 0) {
@@ -274,7 +274,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                 justifyContent: "center",
                 maskImage: "linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)",
                 cursor: "pointer",
-                transform: "scale(clamp(0.95, calc(0.7 + 0.00078125 * 100vw), 2.2))",
+                transform: "scale(2.0)",
               }}
             >
             {shouldShowAnimation ? (
@@ -297,7 +297,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                     <div
                       key={index}
                       style={{
-                        fontSize: "150px",
+                        fontSize: "105px",
                         lineHeight: "200px",
                         height: "200px",
                         display: "flex",
@@ -313,8 +313,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                           {/* Left candy - behind and up-left */}
                           <span style={{
                             position: "absolute",
-                            fontSize: "150px",
-                            left: "calc(50% - 60px)",
+                            left: "calc(50% - 40px)",
                             top: "calc(50% - 15px)",
                             transform: "translate(-50%, -50%)",
                             zIndex: 1,
@@ -322,8 +321,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                           {/* Right candy - behind and up-right */}
                           <span style={{
                             position: "absolute",
-                            fontSize: "150px",
-                            left: "calc(50% + 60px)",
+                            left: "calc(50% + 40px)",
                             top: "calc(50% - 15px)",
                             transform: "translate(-50%, -50%)",
                             zIndex: 1,
@@ -331,7 +329,6 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                           {/* Middle candy - in front, centered */}
                           <span style={{
                             position: "absolute",
-                            fontSize: "150px",
                             left: "50%",
                             top: "50%",
                             transform: "translate(-50%, -50%)",
@@ -341,7 +338,6 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                       ) : (
                         <span style={{
                           position: "absolute",
-                          fontSize: "150px",
                           left: "50%",
                           top: "50%",
                           transform: "translate(-50%, -50%)",
@@ -369,7 +365,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                     <div
                       key={index}
                       style={{
-                        fontSize: "150px",
+                        fontSize: "105px",
                         lineHeight: "200px",
                         height: "200px",
                         display: "flex",
@@ -385,8 +381,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                           {/* Left candy - behind and up-left */}
                           <span style={{
                             position: "absolute",
-                            fontSize: "150px",
-                            left: "calc(50% - 60px)",
+                            left: "calc(50% - 40px)",
                             top: "calc(50% - 15px)",
                             transform: "translate(-50%, -50%)",
                             zIndex: 1,
@@ -394,8 +389,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                           {/* Right candy - behind and up-right */}
                           <span style={{
                             position: "absolute",
-                            fontSize: "150px",
-                            left: "calc(50% + 60px)",
+                            left: "calc(50% + 40px)",
                             top: "calc(50% - 15px)",
                             transform: "translate(-50%, -50%)",
                             zIndex: 1,
@@ -403,7 +397,6 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                           {/* Middle candy - in front, centered */}
                           <span style={{
                             position: "absolute",
-                            fontSize: "150px",
                             left: "50%",
                             top: "50%",
                             transform: "translate(-50%, -50%)",
@@ -413,7 +406,6 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                       ) : (
                         <span style={{
                           position: "absolute",
-                          fontSize: "150px",
                           left: "50%",
                           top: "50%",
                           transform: "translate(-50%, -50%)",
@@ -427,7 +419,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
               // Initial static display
               <div
                 style={{
-                  fontSize: "150px",
+                  fontSize: "105px",
                   lineHeight: "1",
                   height: "200px",
                   display: "flex",
@@ -470,7 +462,6 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                 ) : (
                   <span style={{
                     position: "absolute",
-                    fontSize: "150px",
                     left: "50%",
                     top: "50%",
                     transform: "translate(-50%, -50%)",
@@ -611,7 +602,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                 transform: translateY(0);
               }
               100% {
-                transform: translateY(-5900px);
+                transform: translateY(-3000px);
               }
             }
             @keyframes slotSpin2 {
@@ -619,7 +610,7 @@ export default recipe<SpinnerInput, SpinnerOutput>(
                 transform: translateY(0);
               }
               100% {
-                transform: translateY(-5900px);
+                transform: translateY(-3000px);
               }
             }
             @keyframes payoutFade {
